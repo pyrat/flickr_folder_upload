@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/user"
+	"strings"
 )
 
 type Config struct {
@@ -44,6 +45,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter photoset: ")
 	photoset_name, _ := reader.ReadString('\n')
+	photoset_name = strings.TrimSpace(photoset_name)
 
 	// Run a shift on the filepaths slice
 	first_image, filepaths := filepaths[0], filepaths[1:]

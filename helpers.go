@@ -77,7 +77,8 @@ func photosetExists(client *flickr.FlickrClient, name string) (bool, string) {
 	}
 
 	for _, p := range response.Photosets.Items {
-		if p.Title == name {
+		if strings.Compare(p.Title, name) == 0 {
+			fmt.Println("Found a set to add to.")
 			return true, p.Id
 		}
 	}
