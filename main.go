@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"github.com/burntsushi/toml"
 	"github.com/masci/flickr"
@@ -21,6 +22,9 @@ type Config struct {
 
 func main() {
 	// retrieve Flickr credentials from env vars
+
+	privacy := flag.Bool("private", false, "Privacy settings")
+	flag.Parse()
 
 	config := ReadConfig()
 	apik := config.Apikey
@@ -50,7 +54,7 @@ func main() {
 	// Run a shift on the filepaths slice
 	first_image, filepaths := filepaths[0], filepaths[1:]
 	fmt.Println("Uploading initial image and creating photoset..")
-	photoset_id, err := uploadImageAndCreateSet(config.Basepath, first_image, client, photoset_name)
+	photoset_id, err := uploadImageAndCreateSet(config.Basepath, first_image, client, photoset_name, *privacy)
 	if err != nil {
 		fmt.Println("Error uploading first photo and creating photoset", err)
 	} else {
@@ -62,7 +66,7 @@ func main() {
 
 	for _, f := range filepaths {
 		fmt.Printf("Uploading %d of %d images.\n", x, number_files)
-		_, err := uploadImageToSet(config.Basepath, f, client, photoset_id)
+		_, err := uploadImageToSet(config.Basepath, f, client, photoset_id, *privacy)
 		if err != nil {
 			fmt.Println("Error uploading image", f.Name())
 		}

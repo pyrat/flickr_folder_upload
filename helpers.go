@@ -36,12 +36,12 @@ func isImage(fileinfo os.FileInfo) bool {
 }
 
 // There should be a "find or create photoset option" (allowing to add to existing photosets etc.)
-func uploadImageAndCreateSet(base_path string, fileinfo os.FileInfo, client *flickr.FlickrClient, photoset_name string) (string, error) {
+func uploadImageAndCreateSet(base_path string, fileinfo os.FileInfo, client *flickr.FlickrClient, photoset_name string, privacy bool) (string, error) {
 
 	params := flickr.NewUploadParams()
-	params.IsPublic = true
-	params.IsFamily = true
-	params.IsFriend = true
+	params.IsPublic = !privacy
+	params.IsFamily = !privacy
+	params.IsFriend = !privacy
 
 	path := base_path + "/" + fileinfo.Name()
 	resp, err := flickr.UploadFile(client, path, params)
@@ -87,11 +87,11 @@ func photosetExists(client *flickr.FlickrClient, name string) (bool, string) {
 
 }
 
-func uploadImageToSet(base_path string, fileinfo os.FileInfo, client *flickr.FlickrClient, photoset_id string) (*flickr.BasicResponse, error) {
+func uploadImageToSet(base_path string, fileinfo os.FileInfo, client *flickr.FlickrClient, photoset_id string, privacy bool) (*flickr.BasicResponse, error) {
 	params := flickr.NewUploadParams()
-	params.IsPublic = true
-	params.IsFamily = true
-	params.IsFriend = true
+	params.IsPublic = !privacy
+	params.IsFamily = !privacy
+	params.IsFriend = !privacy
 
 	path := base_path + "/" + fileinfo.Name()
 	resp, err := flickr.UploadFile(client, path, params)
