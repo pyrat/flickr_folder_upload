@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/burntsushi/toml"
-	"github.com/masci/flickr"
+	"gopkg.in/masci/flickr.v2"
 	"log"
 	"os"
 	"os/user"

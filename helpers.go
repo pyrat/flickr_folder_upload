@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/masci/flickr"
-	"github.com/masci/flickr/photosets"
+	"gopkg.in/masci/flickr.v2"
+	"gopkg.in/masci/flickr.v2/photosets"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -39,11 +39,13 @@ func isImage(fileinfo os.FileInfo) bool {
 func uploadImageAndCreateSet(base_path string, fileinfo os.FileInfo, client *flickr.FlickrClient, photoset_name string, privacy bool) (string, error) {
 
 	params := flickr.NewUploadParams()
-	params.IsPublic = !privacy
-	params.IsFamily = !privacy
-	params.IsFriend = !privacy
+	params.IsPublic = true
+	params.IsFamily = true
+	params.IsFriend = true
 
 	path := base_path + "/" + fileinfo.Name()
+	fmt.Println("Path to upload:", path)
+
 	resp, err := flickr.UploadFile(client, path, params)
 	if err != nil {
 		fmt.Println("Failed uploading:", err)
@@ -51,10 +53,10 @@ func uploadImageAndCreateSet(base_path string, fileinfo os.FileInfo, client *fli
 			fmt.Println(resp.ErrorMsg)
 		}
 	} else {
-		fmt.Println("Photo uploaded:", path, resp.Id)
+		fmt.Println("Photo uploaded:", path, resp.ID)
 		removeImageFile(base_path, fileinfo)
 	}
-	return findOrCreatePhotoset(client, photoset_name, resp.Id)
+	return findOrCreatePhotoset(client, photoset_name, resp.ID)
 }
 
 func findOrCreatePhotoset(client *flickr.FlickrClient, name string, image_id string) (string, error) {
@@ -101,11 +103,11 @@ func uploadImageToSet(base_path string, fileinfo os.FileInfo, client *flickr.Fli
 			fmt.Println(resp.ErrorMsg)
 		}
 	} else {
-		fmt.Println("Photo uploaded:", path, resp.Id)
+		fmt.Println("Photo uploaded:", path, resp.ID)
 		removeImageFile(base_path, fileinfo)
 	}
 
-	return photosets.AddPhoto(client, photoset_id, resp.Id)
+	return photosets.AddPhoto(client, photoset_id, resp.ID)
 }
 
 func removeImageFile(base_path string, fileinfo os.FileInfo) {

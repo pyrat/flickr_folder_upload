@@ -8,14 +8,20 @@
   version = "v0.3.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/masci/flickr"
-  packages = [".","error","photosets"]
-  revision = "91a9ca45c6470ea51408fa2a3c3233790b2888a5"
-  version = "0.1"
+  packages = [".","photosets"]
+  revision = "8550b2d9d1f11f087bdedad9881d7a3a9042dd19"
+
+[[projects]]
+  branch = "v2"
+  name = "gopkg.in/masci/flickr.v2"
+  packages = [".","error"]
+  revision = "3cc496dc15cd2a9460265656665423635e0a4a0b"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "11294ddccdf71e1abf2f3b653705fde76d1c9a0414f0ab4dfcd629d011b9cb98"
+  inputs-digest = "a5d665c85c7b5d0c73eed40af3a1680ae6521eb2d6a35e2ecb3d5180dcccf5dd"
   solver-name = "gps-cdcl"
   solver-version = 1

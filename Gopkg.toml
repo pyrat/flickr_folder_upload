@@ -26,5 +26,5 @@
   version = "0.3.0"
 
 [[constraint]]
-  name = "github.com/masci/flickr"
-  version = "0.1.0"
+  name = "gopkg.in/masci/flickr.v2"
+  branch = "master"
